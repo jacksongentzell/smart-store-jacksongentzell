@@ -14,9 +14,9 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.12",
 ]
-description = "Professional Python starter project using uv and a src layout"
+description = "Smart Store BI Analytics Project"
 license = "MIT"
-name = "analytics-project" # PACKAGE name (matches src folder except with dashes)
+name = "smart-store-jacksongentzell" # PACKAGE name (matches src folder except with dashes)
 readme = "README.md"
 requires-python = ">=3.12"
 version = "0.0.1"
@@ -31,10 +31,10 @@ dependencies = [ # fmt: off
 ]  # fmt: on
 
 [project.urls]
-"Bug Tracker" = "https://github.com/denisecase/pro-analytics-02-starter/issues"
-Documentation = "https://denisecase.github.io/pro-analytics-02-starter/"
-Homepage = "https://github.com/denisecase/pro-analytics-02-starter"
-Repository = "https://github.com/denisecase/pro-analytics-02-starter"
+"Bug Tracker" = "https://github.com/jacksongentzell/smart-store-jacksongentzell/issues"
+Documentation = "https://jacksongentzell.github.io/smart-store-jacksongentzell/"
+Homepage = "https://github.com/jacksongentzell/smart-store-jacksongentzell"
+Repository = "https://github.com/jacksongentzell/smart-store-jacksongentzell"
 
 [project.optional-dependencies]
 dev = [
