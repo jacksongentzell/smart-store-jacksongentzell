@@ -166,4 +166,58 @@ Before starting a new session, remember to do a `git pull` and keep your tools u
 
 Each time forward progress is made, remember to git add-commit-push.
 
+## ✅ Project Progress – Jackson Gentzell
 
+### Environment & Setup
+
+So far I have completed the initial setup tasks for the Smart Store project.
+
+---
+
+### Steps Completed
+
+1. **Cloned the repository from GitHub**
+```
+git clone https://github.com/jacksongentzell/smart-store-jacksongentzell.git
+```
+- Opened the project in VS Code
+- Verified folder structure:
+```
+README.md
+data/raw/
+src/analytics_project/
+.venv/
+```
+
+2. **Set up the local Python environment**
+```
+uv venv
+uv run python --version
+```
+- Confirmed environment activation
+
+3. **Added the data preparation script**
+- Created `src/analytics_project/data_prep.py`
+- Copied starter code from instructor repository
+
+4. **Executed the data preparation module**
+```
+uv run python -m analytics_project.data_prep
+```
+**Results:**
+- `customers_data.csv`: 201 rows × 4 columns
+- `products_data.csv`: 100 rows × 4 columns
+- `sales_data.csv`: 2001 rows × 7 columns
+- Log file created: `project.log`
+- Data preparation completed successfully
+
+5. **Committed and pushed to GitHub**
+```
+git add .
+git commit -m "Add and verify data_prep module"
+git push -u origin main
+```
+
+6. **Updated README.md**
+- Added setup documentation and workflow summary
+- Verified Markdown formatting in VS Code preview
