@@ -5,14 +5,15 @@ CustomerID,Name,Region,JoinDate,CustomerRewardPoints,CustomerStatus
 1003,David Brennan,North,5/21/2020,1575,VIP
 1004,Kerry Collins,North,9/12/2023,75,New
 1005,Jessica Mora,South,8/5/2021,420,Active
-1006,Hannah Ray,West,7/3/2021,1330,Active
+1006,,West,7/3/2021,1330,Active
 1007,David Kim,West,5/20/2020,2050,VIP
 1008,William Ramirez,EAST,9/15/2023,50,New
 1009,Zachary Bell Jr.,East,4/20/2023,210,Active
 1010,Mike Davis,East,3/23/2022,560,Active
 1011,Amanda Myers,West,9/5/2021,310,Active
 1012,Tara Miller,North,8/10/2020,1800,VIP
-1013,Alyssa Morgan,North,7/22/2022,770,Active
+1013,Alyssa Morgan,North,,770,Active
+1014,Cindy Woods,East,4/2/2024,20,New
 1014,Cindy Woods,East,4/2/2024,20,New
 1015,Jennifer Rodgers,North,2/12/2023,950,Active
 1016,Andrea Roberts,EAST,5/16/2021,1650,VIP
@@ -78,6 +79,7 @@ CustomerID,Name,Region,JoinDate,CustomerRewardPoints,CustomerStatus
 1076,Glenn Shelton,east,5/1/2024,1100,Active
 1077,Amy Espinoza,North,5/29/2021,455,Active
 1078,Danielle Fuller,south-west,12/8/2023,1840,VIP
+1060,Mr. Christopher Thompson,South,4/10/2023,410,Active
 1079,Zachary Thompson MD,EAST,9/5/2022,1220,Active
 1080,Thomas Parker,south-west,2/28/2023,160,Active
 1081,Ryan White,South,9/4/2020,185,Active
@@ -90,7 +92,7 @@ CustomerID,Name,Region,JoinDate,CustomerRewardPoints,CustomerStatus
 1088,Lindsay Torres,east,12/30/2021,10,New
 1089,Matthew Hernandez,North,4/12/2023,780,Active
 1090,Nicholas Dunlap,South,10/11/2020,1080,Active
-1091,Brianna Thomas,south-west,5/23/2023,540,Active
+1091,Brianna Thomas,,5/23/2023,540,Active
 1092,Timothy Hill,West,9/7/2023,1360,Active
 1093,Christian Medina,East,2/4/2023,1950,VIP
 1094,Robert Jones,West,11/18/2023,150,New
@@ -161,7 +163,7 @@ CustomerID,Name,Region,JoinDate,CustomerRewardPoints,CustomerStatus
 1159,Kelli Smith,North,1/28/2022,340,Active
 1160,Phillip Soto,West,4/21/2023,910,Active
 1161,David Ellis,East,1/2/2023,980,Active
-1162,Deborah Rice,east,1/14/2022,1070,Active
+1162,Deborah Rice,east,1/14/2022,105789770,Active
 1163,Elizabeth Vaughn,West,5/1/2023,1425,Active
 1164,William Ramsey,North,5/4/2023,172,Active
 1165,Richard Burnett,Central,7/24/2022,50,New
@@ -173,7 +175,7 @@ CustomerID,Name,Region,JoinDate,CustomerRewardPoints,CustomerStatus
 1171,Ronald Marquez,south-west,4/21/2024,495,Active
 1172,Eric Barr,EAST,2/1/2023,1035,Active
 1173,David King MD,North,9/14/2022,920,Active
-1174,Deborah Saunders,West,12/25/2021,880,Active
+1174,Deborah Saunders,West,12/25/2021,887890,Active
 1175,Teresa Lopez,West,10/20/2021,2075,VIP
 1176,Ashley Williams,EAST,11/24/2021,35,New
 1177,Katherine West,east,11/1/2020,108,Active
@@ -187,7 +189,7 @@ CustomerID,Name,Region,JoinDate,CustomerRewardPoints,CustomerStatus
 1185,Cameron Levine,east,7/26/2021,560,Active
 1186,Timothy Williams,West,9/28/2021,1240,Active
 1187,Kayla Solomon,North,6/10/2022,65,New
-1188,Ashley Todd,North,9/4/2023,220,Active
+1188,Ashley Todd,North,9/4/2023,2205789,Active
 1189,Jennifer Farrell,North,11/18/2022,1750,VIP
 1190,Elizabeth Robinson,south-west,12/27/2023,380,Active
 1191,Kyle Smith Jr.,South,10/31/2023,640,Active

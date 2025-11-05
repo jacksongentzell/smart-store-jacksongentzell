@@ -9,7 +9,7 @@ import pathlib
 
 import pandas as pd
 
-from .utils_logger import init_logger, logger, project_root
+from ..utils.logger import init_logger, logger, project_root
 
 # Set up paths as constants
 DATA_DIR: pathlib.Path = project_root.joinpath("data")
