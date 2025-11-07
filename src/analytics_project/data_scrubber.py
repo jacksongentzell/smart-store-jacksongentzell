@@ -77,7 +77,7 @@ class DataScrubber:
 
     def format_column_strings_to_upper_and_trim(self, column: str):
         if column not in self.df.columns:
-            raise ValueError(f"Column name '{column}' not found in the DataFrame.")  # fixed
+            raise ValueError(f"Column name '{column}' not found in the DataFrame.")
         mask = self.df[column].notnull()
         self.df.loc[mask, column] = self.df.loc[mask, column].astype(str).str.upper().str.strip()
         return self

@@ -153,3 +153,19 @@ stdev                   0.60
 2025-11-06 18:27:INFO    AT data_prep.py:25: sales_data.csv: loaded DataFrame with shape 2009 rows x 9 cols
 2025-11-06 18:27:INFO    AT data_prep.py:84: Saved cleaned sales data.
 2025-11-06 18:27:INFO    AT data_prep.py:86: Data preparation complete.
+2025-11-06 19:14:INFO    AT logger.py:105: Logging to file: C:\Repos\smart-store-jacksongentzell\project.log
+2025-11-06 19:14:INFO    AT data_prep.py:38: Starting data preparation...
+2025-11-06 19:14:INFO    AT data_prep.py:24: Reading raw data from C:\Repos\smart-store-jacksongentzell\data\raw\customers_data.csv.
+2025-11-06 19:14:INFO    AT data_prep.py:26: customers_data.csv: loaded DataFrame with shape 203 rows x 6 cols
+2025-11-06 19:19:INFO    AT logger.py:105: Logging to file: C:\Repos\smart-store-jacksongentzell\project.log
+2025-11-06 19:19:INFO    AT data_prep.py:38: Starting data preparation...
+2025-11-06 19:19:INFO    AT data_prep.py:24: Reading raw data from C:\Repos\smart-store-jacksongentzell\data\raw\customers_data.csv.
+2025-11-06 19:19:INFO    AT data_prep.py:26: customers_data.csv: loaded DataFrame with shape 203 rows x 6 cols
+2025-11-06 19:19:INFO    AT data_prep.py:59: Saved cleaned customers data to clean folder.
+2025-11-06 19:19:INFO    AT data_prep.py:24: Reading raw data from C:\Repos\smart-store-jacksongentzell\data\raw\products_data.csv.
+2025-11-06 19:19:INFO    AT data_prep.py:26: products_data.csv: loaded DataFrame with shape 102 rows x 6 cols
+2025-11-06 19:19:INFO    AT data_prep.py:71: Saved cleaned products data to clean folder.
+2025-11-06 19:19:INFO    AT data_prep.py:24: Reading raw data from C:\Repos\smart-store-jacksongentzell\data\raw\sales_data.csv.
+2025-11-06 19:19:INFO    AT data_prep.py:26: sales_data.csv: loaded DataFrame with shape 2009 rows x 9 cols
+2025-11-06 19:19:INFO    AT data_prep.py:85: Saved cleaned sales data to clean folder.
+2025-11-06 19:19:INFO    AT data_prep.py:87: Data preparation complete.
