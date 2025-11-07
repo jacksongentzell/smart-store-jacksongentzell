@@ -221,3 +221,133 @@ git push -u origin main
 6. **Updated README.md**
 - Added setup documentation and workflow summary
 - Verified Markdown formatting in VS Code preview
+
+
+ # 7. **Created and Implemented Data Scrubber Utility**
+
+- Added a reusable **data cleaning utility** class to `src/analytics_project/data_scrubber.py`.
+- This class handles:
+  - Checking for missing values and duplicates.
+  - Dropping unnecessary columns.
+  - Converting data types for consistency.
+  - Exporting cleaned data to the processed data folder.
+- Verified imports and module recognition within the project.
+- Confirmed that all Python files follow consistent naming conventions and formatting.
+
+Run the data scrubber module:
+
+```bash
+uv run python -m analytics_project.data_scrubber
+```
+
+**Results:**
+- Cleaned data successfully generated and logged to `project.log`.
+- Confirmed function calls and documentation strings are working as expected.
+
+---
+
+## 8. **Verified Project Logging and Output**
+
+- Confirmed that all data preparation and cleaning actions output consistent messages to `project.log`.
+- Reviewed timestamps and message formatting for accuracy.
+- Verified that no errors or warnings were present during execution.
+
+---
+
+## 9. **Committed and Pushed Final Changes**
+
+```bash
+git add .
+git commit -m "Add data_scrubber utility and update project log"
+git push
+```
+
+- Verified push completion in GitHub repository.
+- Checked `README.md` and code structure via GitHub web interface.
+
+## 10. Project 3: Data Scrubber and Data Preparation Pipeline
+
+### Overview
+
+In Project 3, the goal was to finalize data preparation and ensure all raw data files were clean, consistent, and ready for ETL into a central data store for future BI analysis.
+
+Key objectives achieved:
+
+- Reusable **DataScrubber** class to handle common data cleaning tasks.
+- Standardized pipeline to process `customers`, `products`, and `sales` CSV files.
+- Verified output data consistency and correctness using unit tests.
+- Automated logging for all cleaning and preparation steps.
+
+---
+
+### Steps Completed
+
+1. **Reviewed and Completed DataScrubber Class**
+
+- Located at `src/analytics_project/data_scrubber.py`.
+- Handles tasks including:
+  - Removing duplicates
+  - Handling missing values
+  - Formatting text columns
+  - Renaming columns
+  - Parsing dates
+  - Dropping or reordering columns
+- Finalized all TODO items and verified method logic.
+
+2. **Created Unit Tests for DataScrubber**
+
+- Added `src/analytics_project/test_data_scrubber.py`.
+- Verified all methods perform correctly using Python `unittest`.
+- Ran tests:
+
+```bash
+python -m unittest src.analytics_project.test_data_scrubber
+```
+
+**Results:** All 4 tests passed successfully.
+
+3. **Integrated DataScrubber into Data Preparation Script**
+
+- Updated `src/analytics_project/data_prep.py` to use the DataScrubber class.
+- Cleaned and processed all three raw data files (`customers`, `products`, `sales`) using the class.
+- Output files saved in `data/prepared/` folder.
+
+**Execution:**
+
+```bash
+python -m src.analytics_project.data_prep
+```
+
+**Results:**
+
+- `customers_cleaned.csv`: 203 rows × 6 columns
+- `products_cleaned.csv`: 102 rows × 6 columns
+- `sales_cleaned.csv`: 2009 rows × 9 columns
+- All processing steps logged to `project.log`.
+
+4. **Verified Data Cleaning**
+
+- Confirmed no missing values or duplicates in cleaned files.
+- Checked proper formatting of string and date columns.
+- Ensured output is consistent for downstream ETL and BI analysis.
+
+5. **Committed and Pushed Changes**
+
+```bash
+git add .
+git commit -m "Complete Project 3: Add DataScrubber, unit tests, and data_prep integration"
+git push
+```
+
+- Verified repository contains updated `data/prepared/` folder with all cleaned files.
+- README updated with full workflow and results.
+
+---
+
+### Reflections
+
+- **Reusable DataScrubber Class:** Centralized data cleaning logic reduces redundancy and ensures consistent processing across multiple data sources.
+- **Approach Chosen:** Single `data_prep.py` using shared DataScrubber for all files.
+- **Challenges Encountered:** Column naming differences (`cust_id` vs `CustomerID`) and date parsing required adjustments.
+- **Interesting Aspect:** Implementing automated logging to track each cleaning step provides excellent auditability.
+- **Future Enhancements:** Could expand DataScrubber to handle more complex transformations or integrate with ETL pipelines directly.
