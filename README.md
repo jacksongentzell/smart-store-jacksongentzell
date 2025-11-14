@@ -351,3 +351,187 @@ git push
 - **Challenges Encountered:** Column naming differences (`cust_id` vs `CustomerID`) and date parsing required adjustments.
 - **Interesting Aspect:** Implementing automated logging to track each cleaning step provides excellent auditability.
 - **Future Enhancements:** Could expand DataScrubber to handle more complex transformations or integrate with ETL pipelines directly.
+
+# Smart Store Data Warehouse Project 4
+
+## Project Overview
+This project demonstrates the design and implementation of a **data warehouse** for Smart Store sales data.
+The goal was to consolidate cleaned sales, product, and customer data into a central repository that supports **business intelligence** and advanced analytics.
+
+The data warehouse allows us to analyze sales trends, customer behavior, and product performance efficiently.
+
+---
+
+## Schema Design
+
+### Star Schema
+We designed a **star schema** with one **fact table** and two **dimension tables**:
+
+- **Fact Table:** `sales`
+  - Stores all transactional sales data.
+  - Columns include transaction ID, sale date, customer ID, product ID, store ID, campaign ID, sale amount, discount percent, and payment type.
+
+- **Dimension Tables:**
+  - **`customer`**
+    - Columns: customer_id, name, region, join_date, reward_points, status
+  - **`product`**
+    - Columns: product_id, product_name, category, unit_price, product_discount_percent, supplier_region
+
+**Schema Diagram:**
+      customer           product
+        |                   |
+        ---------------------
+                 |
+               sales
+
+This design allows for easy aggregation and querying of sales metrics by customer, product, or other dimensions.
+
+---
+
+## ETL Process
+
+The ETL (Extract, Transform, Load) process was implemented in **`etl_to_dw.py`**:
+
+### Steps:
+
+1. **Extract**
+   - Read cleaned CSV files:
+     - Customers: `customers_cleaned.csv`
+     - Products: `products_cleaned.csv`
+     - Sales: `sales_cleaned.csv`
+
+2. **Transform**
+   - Deduplicate IDs (`customer_id`, `product_id`, `transaction_id`) to satisfy PRIMARY KEY constraints
+   - Clean numeric columns:
+     - Removed `%` symbols from discount columns
+     - Converted numeric strings to `int` or `float`
+   - Dropped rows with missing critical values
+
+3. **Load**
+   - Created SQLite database: `smart_store_dw.db`
+   - Created tables: `customer`, `product`, `sales` with appropriate column types and relationships
+   - Inserted cleaned and transformed data into the tables
+
+---
+
+## Validation
+
+After running the ETL script, row counts in the data warehouse:
+
+- Customers: **200**
+- Products: **98**
+- Sales: **1,995**
+
+### Sample Data Screenshots
+
+#### Customers Table
+![Customers Table](screenshots/customers.png)
+
+#### Products Table
+![Products Table](screenshots/products.png)
+
+#### Sales Table
+![Sales Table](screenshots/sales.png)
+
+---
+
+## Sample Queries
+
+These queries demonstrate that the warehouse can support typical BI tasks:
+
+```sql
+-- Total sales by customer
+SELECT customer_id, SUM(sale_amount) as total_sales
+FROM sales
+GROUP BY customer_id
+ORDER BY total_sales DESC
+LIMIT 10;
+
+-- Total sales by product
+SELECT product_id, SUM(sale_amount) as total_sales
+FROM sales
+GROUP BY product_id
+ORDER BY total_sales DESC
+LIMIT 10;
+
+-- Average discount by product category
+SELECT p.category, AVG(s.discount_percent) as avg_discount
+FROM sales s
+JOIN product p ON s.product_id = p.product_id
+GROUP BY p.category;
+
+Challenges & Resolutions
+
+Duplicate IDs
+
+Customer, product, and transaction IDs contained duplicates
+
+Solution: dropped duplicates before inserting into SQLite
+
+Datatype Mismatches
+
+Some numeric columns had % symbols or empty strings
+
+Solution: cleaned numeric columns and converted to appropriate types
+
+Maintaining Referential Integrity
+
+Ensured that sales.customer_id and sales.product_id exist in their respective dimension tables
+
+Next Steps / Business Use
+
+The data warehouse supports:
+
+Tracking top customers by sales amount
+
+Identifying best-selling products and categories
+
+Monitoring campaign effectiveness
+
+Calculating average discount impacts
+
+Future extensions could include:
+
+Adding a time dimension table for more advanced temporal analysis
+
+Including store or region dimensions for geospatial insights
+
+Connecting to a BI tool like Power BI or Tableau for dashboards
+
+How to Run the ETL
+
+Activate your virtual environment:
+
+& .venv/Scripts/Activate.ps1
+
+
+Run the ETL script:
+
+python src/analytics_project/etl_to_dw.py
+
+
+Verify the database:
+
+Open smart_store_dw.db in VS Code with SQLite Viewer
+
+Check tables: customer, product, sales
+
+Project Files
+data/
+├─ clean/
+│  ├─ customers_cleaned.csv
+│  ├─ products_cleaned.csv
+│  └─ sales_cleaned.csv
+└─ dw/
+   └─ smart_store_dw.db
+
+src/analytics_project/
+└─ etl_to_dw.py
+README.md
+
+
+
+
+---
+
+
