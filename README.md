@@ -529,6 +529,84 @@ src/analytics_project/
 └─ etl_to_dw.py
 README.md
 
+# Project 5: Cross-Platform Reporting with Power BI & Spark
+
+## Overview
+This project demonstrates cross-platform reporting using Power BI Desktop on Windows. The goal is to connect to the data warehouse, perform slicing, dicing, and drilldown, and create interactive visuals to explore business performance.
+
+## Environment and Tools
+- Operating System: Windows
+- Tool: Power BI Desktop
+- Database: smart_store_dw.db (SQLite)
+- Connection: ODBC DSN (smart_store_dsn)
+
+## Data Modeling
+- Tables loaded: customer, product, sales
+- Relationships:
+  - sales.customer_id → customer.customer_id
+  - sales.product_id → product.product_id
+- Added columns to sales table for drilldown: Year, Quarter, Month Name
+
+## SQL Queries
+Top Customers Query:
+SELECT c.name AS customer_name, SUM(s.sale_amount) AS total_spent FROM sales s JOIN customer c ON s.customer_id = c.customer_id GROUP BY c.name ORDER BY total_spent DESC;
+
+This query aggregates total sales by customer and orders them from highest to lowest.
+
+## Slicers
+- Date Slicer: sales.sale_date
+  - Only one unique date exists; Power BI shows a checklist instead of a range slider
+  - Purpose: Demonstrates slicing capability
+- Product Category Slicer: product.category (List)
+  - Purpose: Filter visuals by product category
+- Customer/Region Slicer (optional): customer.region (List)
+  - Purpose: Filter visuals by region
+
+## Dice Matrix
+- Visual: Matrix
+- Rows: product.category
+- Columns: product.region or customer.region
+- Values: Sum of sale_amount
+- Purpose: Break down sales by two categorical dimensions
+- Interaction: Responds dynamically to slicers
+
+## Drilldown Chart
+- Visual: Clustered Column Chart
+- X-Axis Hierarchy: Year → Quarter → Month Name
+- Y-Axis: Sum of sale_amount
+- Purpose: Explore sales trends over time
+- Drilldown Steps: Click Year → drill to Quarter → Click Quarter → drill to Month → Up arrow to return to higher level
+- Interaction: Responds to slicers
+
+## Optional Top Customers Bar Chart
+- Visual: Bar Chart
+- Axis: customer_name
+- Values: total_spent
+- Purpose: Shows highest spending customers
+
+## Report Layout
+- Slicers: Top-left (Date, Product Category, Region)
+- Matrix visual: Center
+- Drilldown chart: Right of matrix
+- Optional bar chart: Bottom or side
+- All visuals are interactive and respond to slicers
+
+## Screenshots
+- Model View: shows table relationships
+- Slice Result: visuals filtered by slicer
+- Dice Result: matrix visual showing two dimensions
+- Drilldown Result: column chart drilled down to Month
+(Insert image links as needed, e.g., ![Slice Screenshot](images/slice.png))
+
+## Notes
+- sales.sale_date contains only a single unique date; slicer behaves as a categorical checklist
+- All visuals demonstrate slicing, dicing, and drilldown operations
+- Optional additional slicers or Top Customers chart improve report interactivity
+
+## Git Commands
+git add .
+git commit -m "Completed analysis and visualization"
+git push -u origin main
 
 
 
