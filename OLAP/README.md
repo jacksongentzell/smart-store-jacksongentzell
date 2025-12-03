@@ -199,3 +199,238 @@ Avg Discount = AVERAGE( sales_cleaned[DiscountPercent] )
 
 **Prepared by:** Jackson Gentzell — OLAP / Power BI analysis of discount-adjusted net revenue.
 
+
+
+
+
+Work Flow Two
+# README — Discount-adjusted Net Revenue OLAP Analysis
+
+## Section 1. The Business Goal
+
+**Exact question:**
+Determine which product categories and customer segments drive the most **net revenue** (discount-adjusted sales) across regions and stores, and evaluate how discounting impacts net revenue.
+
+**Why it matters:**
+
+* Net revenue (sales after discounts) is the most accurate short-term profitability measure — high gross sales with high discounts may still result in low profit.
+* Understanding which categories, customer statuses, and regions generate the strongest net revenue supports data-driven pricing, inventory, and promotional strategy.
+* Analyzing discount behavior shows whether promotions boost profitable revenue or merely increase low-margin transaction volume.
+* Drilldowns into categories and regions enable operational decisions at the store and product level.
+
+---
+
+## Section 2. Data Source
+
+**Source Type:** Cleaned CSV files prepared from the Smart Store dataset. All data was imported directly into Power BI Desktop.
+
+**Files / tables used (paths and columns):**
+
+### `data/clean/customers_cleaned.csv`
+Customer dimension. Columns used:
+
+* `Customer_ID`
+* `Name`
+* `Region`
+* `Join_Date`
+* `Reward_Points`
+* `Status` (new, active, vip)
+
+### `data/clean/products_cleaned.csv`
+Product dimension. Columns used:
+
+* `Product_ID`
+* `Product_Name`
+* `Category`
+* `Unit_Price`
+* `Product_Discount_Percent`
+* `Product_Supplier_Region`
+
+### `data/clean/sales_cleaned.csv`
+Fact table (transactions). Columns used:
+
+* `Transaction_ID`
+* `Sale_Date`
+* `Customer_ID` (FK → Customers)
+* `Product_ID`  (FK → Products)
+* `Store_ID`
+* `Campaign_ID`
+* `Sale_Amount`
+* `Discount_Percent`
+* `Sale_Payment_Type`
+
+---
+
+## Section 3. Tools
+
+**Power BI Desktop (core tool)**
+Used for importing the data, modeling the star schema, creating DAX measures, and building the OLAP-style drilldown visuals. Power BI supports slicing/dicing, hierarchies, and aggregated measures natively.
+
+**Excel (secondary tool)**
+Used only for lightweight validation of CSV formatting and basic verification before importing into Power BI.
+
+**Why not SQL or Python:**
+The assignment requires an OLAP-style visual tool. Power BI alone satisfies all requirements for measures, visual exports, drilldowns, and documentation.
+
+---
+
+## Section 4. Workflow & Logic
+
+### Data model and joins
+
+Power BI Data Model:
+
+* **Fact table:** `sales_cleaned`
+* **Dimension tables:** `customers_cleaned`, `products_cleaned`
+
+Relationships:
+
+* `sales_cleaned[CustomerID]` → `customers_cleaned[CustomerID]` (1:*)
+* `sales_cleaned[ProductID]` → `products_cleaned[ProductID]` (1:*)
+
+This forms a clean star schema.
+
+---
+
+### Dimensions Used
+
+* **Product:** `Category`, `ProductName`
+* **Customer:** `CustomerStatus`, `Region`
+* **Geography:** `Region`
+* **Discount Bucket:** Custom column based on `DiscountPercent`
+* **Temporal:** `SaleDate` (implicit time slicing)
+* **Sales Behavior:** `SalePaymentType`, `CampaignID`
+
+---
+
+### Calculated Column — Discount Bucket
+
+Created in the **sales_cleaned** table:
+
+```DAX
+DiscountBucket =
+VAR d = sales_cleaned[DiscountPercent]
+RETURN
+    SWITCH(
+        TRUE(),
+        ISBLANK(d), "Unknown",
+        d <= 5, "0–5%",
+        d > 5 && d <= 10, "5–10%",
+        d > 10 && d <= 20, "10–20%",
+        d > 20, "20%+",
+        "Unknown"
+    )
+```
+
+---
+
+### Core DAX Measures
+
+```DAX
+Total Sales =
+SUM( sales_cleaned[SaleAmount] )
+
+Net Revenue =
+SUMX(
+    sales_cleaned,
+    sales_cleaned[SaleAmount] * (1 - DIVIDE(sales_cleaned[DiscountPercent], 100))
+)
+
+Transactions =
+COUNT( sales_cleaned[TransactionID] )
+
+Avg Discount =
+AVERAGE( sales_cleaned[DiscountPercent] )
+```
+
+---
+
+### OLAP Operations Performed
+
+* **Slicing**
+  - By Category, CustomerStatus, Region, DiscountBucket, PaymentType
+
+* **Dicing**
+  - e.g., Category × Region
+  - DiscountBucket × Category
+
+* **Drilldown**
+  - `Region` → `CustomerStatus` (transaction analysis)
+  - `Category` → `ProductName` (net revenue analysis)
+
+* **Aggregation Checks**
+  - Verified that Total Sales equals raw sum of SaleAmount
+  - Verified Net Revenue equals row-level discounted revenue
+
+---
+
+### Visuals Built
+
+1. **Revenue by Discount Bucket**
+   - Shows which discount levels result in the highest net revenue.
+
+2. **Discount % vs Net Revenue (Scatter or Column)**
+   - Illustrates whether deeper discounts correlate with revenue loss or gain.
+
+3. **Transaction Count by Region → Customer Status (Drilldown)**
+   - Highlights geographic performance and allows deeper inspection of customer behavior.
+
+4. **Revenue by Category → Product Name (Drilldown)**
+   - Identifies strong categories and the individual products responsible.
+
+---
+
+## Section 5. Results
+
+### Visuals (placeholders — replace with actual PNGs)
+
+1. Full Report with all Visuals
+   ![Image](FullOLAPReport.png)
+
+---
+
+### Key Insights
+
+* **0–5%** and **10–20%** buckets generally produce the highest **net revenue**, indicating that light or moderate discounting is optimal.
+* **High-discount (20%+) transactions** produce significantly lower net revenue and should be reserved for clearance or campaigns with volume goals.
+* **Certain categories dominate net revenue**, and drilling down reveals a few specific products acting as top revenue drivers.
+* **Regions differ sharply in transaction volume**, with drilldown revealing which customer statuses (active, new, vip) create the most activity.
+
+---
+
+## Section 6. Suggested Business Action
+
+1. **Reduce frequency of 20%+ discounts** unless strategically justified.
+2. **Favor moderate discounts (5–10% or 10–20%)** for categories that show positive net revenue response.
+3. **Allocate marketing budget** toward the highest-performing categories and customer segments.
+4. **Strengthen operations in top-performing regions and stores** identified through drilldown.
+5. **Audit campaigns associated with low net revenue** for potential redesign.
+6. **Use product-level drilldown insights** to optimize inventory and purchasing decisions.
+
+---
+
+## Section 7. Challenges
+
+**Challenges:**
+No major blockers occurred. Main issues involved DAX column creation and building functional drilldown hierarchies.
+
+**Resolution:**
+All minor issues were resolved through iterative testing and AI-assisted troubleshooting within Power BI.
+
+---
+
+## Appendix — Quick Reproduction Steps
+
+1. Import all three cleaned CSV files into Power BI.
+2. Create relationships on CustomerID and ProductID.
+3. Add the `DiscountBucket` calculated column.
+4. Create the DAX measures: `Net Revenue`, `Total Sales`, `Transactions`, `Avg Discount`.
+5. Build four visuals using bar, column, scatter, and drilldown hierarchies.
+6. Export visuals as PNG images.
+7. Save the final Power BI file as `smart_store_olap.pbix`.
+
+---
+
+**Prepared by:**
+Jackson Gentzell — OLAP / Power BI analysis of discount-adjusted net revenue.
+
